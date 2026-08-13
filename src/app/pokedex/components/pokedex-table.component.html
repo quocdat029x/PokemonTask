@@ -1,0 +1,73 @@
+<div class="pokedex-table">
+  <div class="pokedex-table__scroll">
+    <table>
+      <thead>
+        <tr>
+          <th class="col-sprite"></th>
+          <th class="sortable" (click)="toggleSort('name')">
+            Name <span class="sort-arrow">{{ sortIndicator('name') }}</span>
+          </th>
+          <th>Types</th>
+          <th class="sortable" (click)="toggleSort('hp')">HP <span class="sort-arrow">{{ sortIndicator('hp') }}</span></th>
+          <th class="sortable" (click)="toggleSort('attack')">Atk <span class="sort-arrow">{{ sortIndicator('attack') }}</span></th>
+          <th class="sortable" (click)="toggleSort('defense')">Def <span class="sort-arrow">{{ sortIndicator('defense') }}</span></th>
+          <th class="sortable" (click)="toggleSort('special-attack')">Sp.Atk <span class="sort-arrow">{{ sortIndicator('special-attack') }}</span></th>
+          <th class="sortable" (click)="toggleSort('special-defense')">Sp.Def <span class="sort-arrow">{{ sortIndicator('special-defense') }}</span></th>
+          <th class="sortable" (click)="toggleSort('speed')">Spd <span class="sort-arrow">{{ sortIndicator('speed') }}</span></th>
+          <th class="sortable col-total" (click)="toggleSort('total')">Total <span class="sort-arrow">{{ sortIndicator('total') }}</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (p of paged(); track p.id) {
+          <tr class="pokedex-table__row" (click)="select.emit(p)">
+            <td class="col-sprite">
+              @if (p.spriteUrl) {
+                <img class="sprite" [src]="p.spriteUrl" [alt]="p.name" loading="lazy" />
+              } @else {
+                <div class="sprite sprite--fallback">#{{ p.id }}</div>
+              }
+            </td>
+            <td class="col-name">{{ p.name }}</td>
+            <td>
+              <div class="types">
+                @for (t of p.types; track t) {
+                  <app-type-badge [name]="t" />
+                }
+              </div>
+            </td>
+            <td class="num">{{ statOf(p, 'hp') }}</td>
+            <td class="num">{{ statOf(p, 'attack') }}</td>
+            <td class="num">{{ statOf(p, 'defense') }}</td>
+            <td class="num">{{ statOf(p, 'special-attack') }}</td>
+            <td class="num">{{ statOf(p, 'special-defense') }}</td>
+            <td class="num">{{ statOf(p, 'speed') }}</td>
+            <td class="num col-total total">{{ p.total }}</td>
+          </tr>
+        } @empty {
+          <tr>
+            <td class="empty-row" colspan="10">No Pokémon match the current filters.</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <div class="pokedex-table__footer">
+    <span class="range">{{ rangeStart() }}–{{ rangeEnd() }} of {{ total() }}</span>
+
+    <label class="page-size">
+      Rows:
+      <select [value]="pageSize()" (change)="onPageSizeChange($event)">
+        @for (size of pageSizes; track size) {
+          <option [value]="size">{{ size }}</option>
+        }
+      </select>
+    </label>
+
+    <div class="pager">
+      <button type="button" class="btn btn--ghost" (click)="prev()" [disabled]="page() === 0">Prev</button>
+      <span class="pager__page">Page {{ page() + 1 }} / {{ pageCount() }}</span>
+      <button type="button" class="btn btn--ghost" (click)="next()" [disabled]="page() >= pageCount() - 1">Next</button>
+    </div>
+  </div>
+</div>

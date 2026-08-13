@@ -1,0 +1,83 @@
+@if (pokemon(); as p) {
+  <div class="panel-overlay" (click)="close.emit()"></div>
+  <aside class="panel" role="dialog" aria-modal="true" [attr.aria-label]="p.name + ' details'">
+    <header class="panel__header">
+      <h2 class="panel__name">{{ p.name }}</h2>
+      <button type="button" class="panel__close" (click)="close.emit()" aria-label="Close detail panel">
+        ✕
+      </button>
+    </header>
+
+    <div class="panel__types">
+      @for (t of p.types; track t) {
+        <app-type-badge [name]="t" />
+      }
+    </div>
+
+    <div class="panel__sprite">
+      @if (p.spriteUrl) {
+        <img [src]="p.spriteUrl" [alt]="p.name" />
+      } @else {
+        <div class="panel__sprite-fallback">#{{ p.id }}</div>
+      }
+    </div>
+
+    <dl class="panel__meta">
+      <div>
+        <dt>Height</dt>
+        <dd>{{ p.height / 10 }} m</dd>
+      </div>
+      <div>
+        <dt>Weight</dt>
+        <dd>{{ p.weight / 10 }} kg</dd>
+      </div>
+      <div>
+        <dt>Total</dt>
+        <dd>{{ p.total }}</dd>
+      </div>
+    </dl>
+
+    <section class="panel__section">
+      <h3 class="panel__section-title">Base stats</h3>
+      <app-radar-chart [stats]="p.stats" />
+    </section>
+
+    <section class="panel__section">
+      <h3 class="panel__section-title">Abilities</h3>
+      @switch (status()) {
+        @case ('loading') {
+          <div class="panel__ability-skeletons">
+            @for (row of [1, 2, 3]; track row) {
+              <app-skeleton [height]="48" />
+            }
+          </div>
+        }
+        @case ('error') {
+          <div class="panel__error">
+            <p>{{ error() }}</p>
+            <button type="button" class="btn btn--ghost" (click)="retry()">Retry</button>
+          </div>
+        }
+        @default {
+          @if (abilities().length) {
+            <ul class="abilities">
+              @for (a of abilities(); track a.name) {
+                <li class="abilities__item">
+                  <span class="abilities__name">
+                    {{ a.name }}
+                    @if (a.isHidden) {
+                      <em class="abilities__hidden">(hidden)</em>
+                    }
+                  </span>
+                  <p class="abilities__effect">{{ a.shortEffect }}</p>
+                </li>
+              }
+            </ul>
+          } @else {
+            <p class="panel__empty">No abilities found.</p>
+          }
+        }
+      }
+    </section>
+  </aside>
+}

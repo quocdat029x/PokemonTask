@@ -1,0 +1,157 @@
+.pokedex-table {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--color-surface-2);
+}
+
+.pokedex-table__scroll {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+thead th {
+  position: sticky;
+  top: 0;
+  background: var(--color-surface-2);
+  text-align: left;
+  padding: 10px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  white-space: nowrap;
+  user-select: none;
+
+  &.sortable {
+    cursor: pointer;
+
+    &:hover {
+      color: #fff;
+    }
+  }
+}
+
+.sort-arrow {
+  color: var(--color-accent);
+  font-size: 10px;
+  margin-left: 2px;
+}
+
+tbody td {
+  padding: 8px 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  vertical-align: middle;
+}
+
+.pokedex-table__row {
+  cursor: pointer;
+  transition: background 0.12s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.04);
+  }
+}
+
+.col-sprite {
+  width: 48px;
+}
+
+.sprite {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  image-rendering: pixelated;
+
+  &.sprite--fallback {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 8px;
+    font-size: 11px;
+    color: var(--color-secondary);
+    image-rendering: auto;
+  }
+}
+
+.col-name {
+  font-weight: 600;
+  text-transform: capitalize;
+  white-space: nowrap;
+}
+
+.types {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.col-total {
+  text-align: right;
+}
+
+.total {
+  font-weight: 700;
+  color: var(--color-accent);
+}
+
+.empty-row {
+  text-align: center;
+  padding: 24px;
+  color: var(--color-secondary);
+}
+
+.pokedex-table__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  flex-wrap: wrap;
+
+  .range {
+    color: var(--color-secondary);
+    font-size: 13px;
+  }
+
+  .page-size {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: var(--color-secondary);
+
+    select {
+      background: var(--color-surface);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 6px;
+      padding: 4px 6px;
+    }
+  }
+
+  .pager {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+
+    &__page {
+      font-size: 13px;
+      color: var(--color-secondary);
+    }
+  }
+}

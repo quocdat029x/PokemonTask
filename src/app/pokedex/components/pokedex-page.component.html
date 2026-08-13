@@ -1,0 +1,32 @@
+<section class="page">
+  <h1 class="page__title">Pokédex</h1>
+
+  <div class="pokedex-filters">
+    <input
+      type="search"
+      class="pokedex-filters__search"
+      placeholder="Search by name…"
+      autocomplete="off"
+      (input)="onSearch($event)"
+    />
+    <select class="pokedex-filters__type" [value]="typeFilter()" (change)="onType($event)">
+      <option value="all">All types</option>
+      @for (t of types(); track t) {
+        <option [value]="t">{{ t }}</option>
+      }
+    </select>
+  </div>
+
+  <app-async-state
+    [status]="status()"
+    [error]="error()"
+    [isEmpty]="isEmpty()"
+    [skeletonRows]="10"
+    emptyMessage="No Pokémon match your search."
+    (retry)="retry()"
+  >
+    <app-pokedex-table [pokemon]="filtered()" (select)="onSelect($event)" />
+  </app-async-state>
+</section>
+
+<app-pokemon-detail-panel [pokemon]="selected()" (close)="closePanel()" />
