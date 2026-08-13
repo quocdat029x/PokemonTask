@@ -19,7 +19,12 @@
       </thead>
       <tbody>
         @for (p of paged(); track p.id) {
-          <tr class="pokedex-table__row" (click)="select.emit(p)">
+          <tr
+            class="pokedex-table__row"
+            [appTypeHighlight]="p.types"
+            [highlightType]="highlightType()"
+            (click)="select.emit(p)"
+          >
             <td class="col-sprite">
               @if (p.spriteUrl) {
                 <img class="sprite" [src]="p.spriteUrl" [alt]="p.name" loading="lazy" />

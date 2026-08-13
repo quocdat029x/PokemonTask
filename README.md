@@ -119,6 +119,13 @@ selection.
 - Folder structure, naming (`*.component.ts` / `*.service.ts` / `*.model.ts`), BEM SCSS
   with CSS custom-property design tokens, per the project's developer guide.
 
+## Bonus
+
+The **`[appTypeHighlight]` directive** is implemented (one bonus, per the brief).
+Pick an attacking type from the Pokédex "Highlight: vs …" dropdown and each row is tinted
+by defensive effectiveness — green (super-effective), red (resisted), or dimmed (immune) —
+using the full 18-type effectiveness chart in `pokedex/constants/type-effectiveness.ts`.
+
 ## What I'd improve with more time
 
 - **PokéAPI pagination**: currently loads the first 151 in one batch for client-side
@@ -126,8 +133,6 @@ selection.
 - **Virtual scroll** the table (`@angular/cdk/scrolling`) instead of pagination, with
   skeleton rows during incremental loads.
 - **Drag-and-drop** Pokémon from the table into team slots (`@angular/cdk/drag-drop`).
-- **Type-effect highlight** directive (`[appTypeHighlight]`) marking rows strong/weak
-  vs. a selected type.
 - A real GraphQL client (Apollo) with normalized cache + typed codegen, and replace the
   mock server with a persisted backend.
 - Broader test coverage: selector streams, the detail-panel stale-response guard, and

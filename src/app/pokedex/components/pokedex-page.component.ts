@@ -31,6 +31,9 @@ export class PokedexPageComponent implements OnInit {
 
   protected readonly selected = signal<Pokemon | null>(null);
 
+  /** Attacking type for the row-highlight bonus ('all' = off). */
+  protected readonly highlightType = signal('all');
+
   /** Empty only when loaded, no matches, and the user actually filtered. */
   protected readonly isEmpty = computed(() => {
     if (this.status() !== 'success') return false;
@@ -50,6 +53,10 @@ export class PokedexPageComponent implements OnInit {
 
   protected onType(event: Event): void {
     this.selectors.setType((event.target as HTMLSelectElement).value);
+  }
+
+  protected onHighlight(event: Event): void {
+    this.highlightType.set((event.target as HTMLSelectElement).value);
   }
 
   protected onSelect(pokemon: Pokemon): void {

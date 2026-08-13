@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, effect, input, output, signal } from '@angular/core';
 import { TypeBadgeComponent } from '../../common/components/type-badge/type-badge.component';
+import { TypeHighlightDirective } from '../directives/type-highlight.directive';
 import { STAT_LABELS } from '../constants/pokemon.constants';
 import { Pokemon, statValue } from '../models/pokemon.model';
 
@@ -26,7 +27,7 @@ type SortDir = 'asc' | 'desc';
 @Component({
   selector: 'app-pokedex-table',
   standalone: true,
-  imports: [TypeBadgeComponent],
+  imports: [TypeBadgeComponent, TypeHighlightDirective],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './pokedex-table.component.html',
   styleUrl: './pokedex-table.component.scss',
@@ -41,6 +42,9 @@ export class PokedexTableComponent {
   readonly sortDir = signal<SortDir>('asc');
   readonly page = signal(0);
   readonly pageSize = signal(25);
+
+  /** Attacking type for the [appTypeHighlight] bonus ('all' = off). */
+  readonly highlightType = input<string>('all');
 
   readonly pageSizes = [10, 25, 50];
 

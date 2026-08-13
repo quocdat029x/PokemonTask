@@ -15,6 +15,13 @@
         <option [value]="t">{{ t }}</option>
       }
     </select>
+
+    <select class="pokedex-filters__type" [value]="highlightType()" (change)="onHighlight($event)" aria-label="Highlight effectiveness vs type">
+      <option value="all">Highlight: off</option>
+      @for (t of types(); track t) {
+        <option [value]="t">vs {{ t }}</option>
+      }
+    </select>
   </div>
 
   <app-async-state
@@ -25,7 +32,7 @@
     emptyMessage="No Pokémon match your search."
     (retry)="retry()"
   >
-    <app-pokedex-table [pokemon]="filtered()" (select)="onSelect($event)" />
+    <app-pokedex-table [pokemon]="filtered()" [highlightType]="highlightType()" (select)="onSelect($event)" />
   </app-async-state>
 </section>
 

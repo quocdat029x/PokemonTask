@@ -110,3 +110,18 @@ a {
 .btn--danger {
   background: var(--color-danger);
 }
+
+/* ── Type-highlight row states (appTypeHighlight bonus) ─────────── */
+.row--strong {
+  box-shadow: inset 3px 0 0 var(--color-success);
+  background: rgba(40, 167, 69, 0.12) !important;
+}
+
+.row--weak {
+  box-shadow: inset 3px 0 0 var(--color-danger);
+  background: rgba(220, 53, 69, 0.12) !important;
+}
+
+.row--immune {
+  opacity: 0.45;
+}
