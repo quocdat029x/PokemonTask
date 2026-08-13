@@ -4,19 +4,19 @@
   <div class="pokedex-filters">
     <input
       type="search"
-      class="pokedex-filters__search"
+      class="search-input pokedex-filters__search"
       placeholder="Search by name…"
       autocomplete="off"
       (input)="onSearch($event)"
     />
-    <select class="pokedex-filters__type" [value]="typeFilter()" (change)="onType($event)">
+    <select class="select" [value]="typeFilter()" (change)="onType($event)">
       <option value="all">All types</option>
       @for (t of types(); track t) {
         <option [value]="t">{{ t }}</option>
       }
     </select>
 
-    <select class="pokedex-filters__type" [value]="highlightType()" (change)="onHighlight($event)" aria-label="Highlight effectiveness vs type">
+    <select class="select" [value]="highlightType()" (change)="onHighlight($event)" aria-label="Highlight effectiveness vs type">
       <option value="all">Highlight: off</option>
       @for (t of types(); track t) {
         <option [value]="t">vs {{ t }}</option>

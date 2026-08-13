@@ -62,7 +62,7 @@
 
     <label class="page-size">
       Rows:
-      <select [value]="pageSize()" (change)="onPageSizeChange($event)">
+      <select class="select" [value]="pageSize()" (change)="onPageSizeChange($event)">
         @for (size of pageSizes; track size) {
           <option [value]="size">{{ size }}</option>
         }

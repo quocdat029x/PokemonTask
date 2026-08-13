@@ -1,32 +1,14 @@
 .pokedex-filters {
   display: flex;
-  gap: 10px;
-  margin-bottom: 16px;
   flex-wrap: wrap;
+  align-items: center;
+  column-gap: 10px;
+  row-gap: 12px;
+  margin-bottom: 18px;
 }
 
+/* Search input grows to fill the row; its visual styling is the global .search-input. */
 .pokedex-filters__search {
-  flex: 1;
-  min-width: 220px;
-  padding: 10px 12px;
-  background: var(--color-surface-2);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 8px;
-  color: #fff;
-  font-size: 14px;
-
-  &:focus {
-    outline: none;
-    border-color: var(--color-primary);
-  }
-}
-
-.pokedex-filters__type {
-  padding: 10px 12px;
-  background: var(--color-surface-2);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 8px;
-  color: #fff;
-  font-size: 14px;
-  text-transform: capitalize;
+  flex: 1 1 240px;
+  min-width: 200px;
 }
