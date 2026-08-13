@@ -1,0 +1,37 @@
+<div class="team-list">
+  <app-async-state
+    [status]="status()"
+    [error]="error()"
+    [isEmpty]="!teams().length"
+    emptyMessage="No teams yet. Create your first team above!"
+    (retry)="retry()"
+  >
+    <ul class="team-list__items">
+      @for (team of teams(); track team.id) {
+        <li
+          class="team-card"
+          [class.team-card--selected]="selectedId() === team.id"
+          (click)="select(team.id)"
+        >
+          <div class="team-card__head">
+            <h3 class="team-card__name">{{ team.name }}</h3>
+            <button
+              type="button"
+              class="btn btn--danger team-card__delete"
+              (click)="remove(team.id); $event.stopPropagation()"
+              [attr.aria-label]="'Delete team ' + team.name"
+            >
+              Delete
+            </button>
+          </div>
+          <p class="team-card__meta">{{ team.pokemon_ids.length }} Pokémon · {{ team.created_at | date: 'mediumDate' }}</p>
+          <div class="team-card__pokemon">
+            @for (id of team.pokemon_ids; track id) {
+              <span class="chip">{{ pokemonName(id) }}</span>
+            }
+          </div>
+        </li>
+      }
+    </ul>
+  </app-async-state>
+</div>

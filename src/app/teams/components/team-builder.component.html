@@ -1,0 +1,77 @@
+<form class="builder" [formGroup]="form" (ngSubmit)="onSubmit()">
+  <h2 class="builder__title">Create a team</h2>
+
+  <div class="field">
+    <label class="field__label" for="team-name">Team name</label>
+    <input
+      id="team-name"
+      type="text"
+      class="field__input"
+      formControlName="name"
+      [attr.maxlength]="MAX_NAME"
+      placeholder="e.g. Kanto Starters"
+      autocomplete="off"
+    />
+    @if ((nameCtrl.touched || nameCtrl.dirty) && nameCtrl.invalid) {
+      <p class="field__error">
+        @if (nameCtrl.errors?.['required']) {
+          Name is required.
+        } @else if (nameCtrl.errors?.['minlength']) {
+          Name must be at least {{ MIN_NAME }} characters.
+        } @else if (nameCtrl.errors?.['maxlength']) {
+          Name must be at most {{ MAX_NAME }} characters.
+        } @else if (nameCtrl.errors?.['nameTaken']) {
+          A team with this name already exists.
+        }
+      </p>
+    }
+  </div>
+
+  <div class="field">
+    <label class="field__label" for="pokemon-search">
+      Pokémon <span class="field__count">({{ selected().length }}/{{ MAX_POKEMON }})</span>
+    </label>
+    <input
+      id="pokemon-search"
+      type="text"
+      class="field__input"
+      [formControl]="searchControl"
+      placeholder="Search by name or id…"
+      autocomplete="off"
+      [disabled]="selected().length >= MAX_POKEMON"
+    />
+
+    @if (suggestions().length) {
+      <ul class="builder__suggestions" role="listbox">
+        @for (p of suggestions(); track p.id) {
+          <li role="option">
+            <button type="button" class="suggestion" (click)="addSelected(p)">
+              <span class="suggestion__name">{{ p.name }}</span>
+              <span class="suggestion__id">#{{ p.id }}</span>
+            </button>
+          </li>
+        }
+      </ul>
+    }
+  </div>
+
+  @if (selected().length) {
+    <div class="builder__chips">
+      @for (p of selected(); track p.id) {
+        <span class="chip chip--removable">
+          {{ p.name }}
+          <button
+            type="button"
+            class="chip__remove"
+            (click)="removeSelected(p.id)"
+            [attr.aria-label]="'Remove ' + p.name"
+          >
+            ✕
+          </button>
+        </span>
+      }
+    </div>
+  }
+
+  <button type="submit" class="btn builder__submit" [disabled]="!canSubmit()">Create team</button>
+</form>
