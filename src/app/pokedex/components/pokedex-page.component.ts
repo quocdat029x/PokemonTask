@@ -17,6 +17,7 @@ import { Pokemon } from '../models/pokemon.model';
   imports: [AsyncStateComponent, PokedexTableComponent, PokemonDetailPanelComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './pokedex-page.component.html',
+  styleUrl: './pokedex-page.component.scss',
 })
 export class PokedexPageComponent implements OnInit {
   private readonly store = inject(PokemonStore);
