@@ -89,6 +89,13 @@
   color: var(--color-secondary);
 }
 
+.builder__no-match {
+  padding: 10px 12px;
+  font-size: 13px;
+  color: var(--color-secondary);
+  text-align: center;
+}
+
 .builder__chips {
   display: flex;
   flex-wrap: wrap;

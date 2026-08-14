@@ -40,7 +40,7 @@ export class PokemonSelectors {
   readonly types$: Observable<string[]> = this.store.pokemon$.pipe(
     map((list) => Array.from(new Set(list.flatMap((p) => p.types))).sort()),
     distinctUntilChanged(),
-    shareReplay({ bufferSize: 1, refCount: true }),
+    shareReplay(1),
   );
 
   /** Search- and type-filtered Pokémon list. */
@@ -52,7 +52,7 @@ export class PokemonSelectors {
         map(([list, type]) => filterPokemon(list, term, type)),
       ),
     ),
-    shareReplay({ bufferSize: 1, refCount: true }),
+    shareReplay(1),
   );
 }
 

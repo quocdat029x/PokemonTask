@@ -52,6 +52,10 @@
           </li>
         }
       </ul>
+    } @else if (searchTerm().trim()) {
+      <ul class="builder__suggestions" aria-live="polite">
+        <li class="builder__no-match">No matching Pokémon</li>
+      </ul>
     }
   </div>
 

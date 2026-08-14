@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { AbstractControl, AsyncValidatorFn, FormBuilder, FormControl, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { Observable, of, timer } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map, startWith } from 'rxjs/operators';
 import { DEFAULT_TRAINER_ID } from '../../common/constants/app.constants';
 import { TeamStore } from '../state/team.store';
@@ -29,7 +29,11 @@ export function uniqueTeamNameValidator(store: TeamStore, debounceMs = TEAM_NAME
     if (value.length < MIN_TEAM_NAME) {
       return of(null); // let sync validators handle short input
     }
-    return timer(debounceMs).pipe(
+    // Debounced uniqueness check: `debounceTime` holds the check until typing
+    // pauses, and Angular cancels the previous pending async validation on each
+    // keystroke — so only the final value is compared against existing names.
+    return of(value).pipe(
+      debounceTime(debounceMs),
       map(() => (store.existingNames.includes(value.toLowerCase()) ? { nameTaken: true } : null)),
     );
   };
@@ -86,6 +90,15 @@ export class TeamBuilderComponent {
     map((term) => this.searchPokemon((term ?? '').toString())),
   );
   protected readonly suggestions = toSignal(this.suggestions$, { initialValue: [] as Pokemon[] });
+
+  /** Current typeahead term (drives the autocomplete Empty state). */
+  protected readonly searchTerm = toSignal(
+    this.searchControl.valueChanges.pipe(
+      startWith(''),
+      map((v) => (v ?? '').toString()),
+    ),
+    { initialValue: '' },
+  );
 
   /** Selected Pokémon shown as chips. */
   protected readonly selected = signal<Pokemon[]>([]);
